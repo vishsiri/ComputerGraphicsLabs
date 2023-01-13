@@ -26,6 +26,7 @@ public class DrawLine extends JPanel {
         int height = this.getHeight();
         g.setColor(Color.BLACK);
         g.drawLine(0, 0, width, height);
+        // g.drawLine(0, height, width, 0);
     }
 
 }
