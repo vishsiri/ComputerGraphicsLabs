@@ -4,10 +4,10 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Lab3 extends JPanel {
+class Lab3_CG extends JPanel {
     public static void main(String[] args) {
         JFrame f = new JFrame();
-        Lab3 m = new Lab3();
+        Lab3_CG m = new Lab3_CG();
 
         f.add(m);
         f.setTitle("Test Swing");
