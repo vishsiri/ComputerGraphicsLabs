@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Bunny extends JPanel{
+public class Assignment1_64050060_64050229 extends JPanel{
     public static void main(String[] args){
         JFrame f = new JFrame();
-        Bunny m = new Bunny();
+        Assignment1_64050060_64050229 m = new Assignment1_64050060_64050229();
 
         f.add(m);
         f.setTitle("Bunny Cuteธึ 64050060 & 64050229");
@@ -30,7 +30,7 @@ public class Bunny extends JPanel{
         g2.fillRect(0, 0, 600, 600);
         g2.setColor(Color.black);
 
-
+        
 
         // layOut
 
