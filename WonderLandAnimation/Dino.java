@@ -204,147 +204,8 @@ public class Dino extends JPanel implements Runnable {
 
         // }
         // else{
-        // _3
+        // _2
         // nose
-        bezierPaint(g2, 304,324,320,337,336,344,350,342,4);
-        bezierPaint(g2, 350,342,374,337,392,321,402,300,4);
-        bezierPaint(g2, 402, 300, 404, 285, 398, 260, 380, 241, 4);
-        bezierPaint(g2, 380, 241, 372, 237, 336, 228, 306, 268, 4);
-        
-        //eyes
-        bezierPaint(g2, 323, 250, 318, 207, 303, 213, 292, 235, 3);
-        bezierPaint(g2, 292, 235, 278, 207, 258, 224, 265, 269, 3);
-        bezierPaint(g2, 292, 235, 286, 201, 259, 200, 250, 239, 3);
-        bezierPaint(g2, 250, 239, 250, 258, 251, 268, 253, 276, 3);
-        bezierPaint(g2, 319, 229, 314, 206, 298, 204, 289, 221, 3);
-
-        g2.drawOval(279, 242, 16, 24);
-        g2.drawOval(301, 239, 14, 22);
-
-        //undereyes
-        bezierPaint(g2, 303,269,291,279,279,280,270,275,3);
-
-        //wavy
-        bezierPaint(g2, 248,253,222,262,220,268,242,292,3);
-        bezierPaint(g2, 242,292,211,318,210,320,248,339,3);
-        bezierPaint(g2, 248,339,243,347,243,356,244,363,3);
-
-
-        //mouth
-        bezierPaint(g2, 309, 315,305,318,303,320,297,324,5);
-        bezierPaint(g2, 350, 342,343,351,326,360,317,360,5);
-
-        //cheek
-        bezierPaint(g2, 253, 276, 224, 304, 235, 342, 275, 358, 3);
-        
-        // back body
-        // bezierPaint(g2, 275, 358, 280, 401, 258, 411, 245, 408, 4);
-        // bezierPaint(g2, 245, 408, 229, 406, 218, 395, 225, 384, 4);
-        // bezierPaint(g2, 225, 384, 205, 383, 197, 378, 197, 378, 3);
-
-        // //tail
-        bezierPaint(g2, 197, 379, 177, 368, 167, 376, 173, 391, 3);
-        bezierPaint(g2, 173, 391, 176, 414, 200, 450, 223, 468, 3);
-
-        // //front leg
-        bezierPaint(g2, 240, 450, 238, 459, 238, 459, 231, 467, 3);
-        bezierPaint(g2, 297,454,294,469,287,479,267,486, 3);
-        bezierPaint(g2, 229, 467,253, 484,237,475,266,487, 3);
-        bezierPaint(g2, 263, 486, 272, 493,270,503,255,507, 3);
-        bezierPaint(g2, 242, 511,277, 506,274,504,286,521, 3);
-        bezierPaint(g2, 285,520,288,533,288,533, 276,548, 3);
-        bezierPaint(g2, 276, 548, 276, 553,276,553,274,557, 3);
-        bezierPaint(g2,272,558,219,556,219,556, 217,555,3);
-        bezierPaint(g2,217, 555,201,530,201,530,195,503,3);
-        bezierPaint(g2,194,505,195,498,195,498,200,496,3);
-        bezierPaint(g2,203,495,203,487,210,482,215,482,3);
-        bezierPaint(g2,217,483,219,470, 216,474,227, 467,3);
-
-        //saddle
-        bezierPaint(g2, 262,370,242,367,230,376,231,395, 2);
-        bezierPaint(g2, 235,375,217,387,214,402,227,411, 3);
-        // bezierPaint(g2, 262, 388, 249, 397, 232, 395, 235, 370, 3);
-
-        // //front arm
-        bezierPaint(g2, 275,360,240,381,242,379,232,395, 3);
-        bezierPaint(g2, 234,391,227,403,229,419,239,429, 3);
-        bezierPaint(g2, 240,430,269,459,269,459,290,433, 3);
-        bezierPaint(g2, 286,386,268,403,268,403,286,416, 3);
-        bezierPaint(g2, 287,414,303,430,303,439,287,438, 3);
-
-        // //front body
-        // bezierPaint(g2, 326, 360, 326, 364, 328, 369, 330, 376, 3);
-        // bezierPaint(g2, 327, 436, 324, 447, 310, 461, 284, 470, 3);
-
-        // //back leg
-        // bezierPaint(g2, 341, 430, 354, 436, 357, 448, 348, 467, 3);
-        // bezierPaint(g2, 348, 467, 332, 466, 316, 469, 303, 469, 3);
-        // bezierPaint(g2, 348, 468, 350, 471, 351, 473, 349, 476, 3);
-        // bezierPaint(g2, 338, 487, 360, 469, 380, 472, 387, 480, 3);
-        // bezierPaint(g2, 387, 480, 399, 490, 392, 497, 377, 509, 3);
-        // bezierPaint(g2, 377, 509, 377, 516, 376, 520, 374, 522, 3);
-        // bezierPaint(g2, 374, 525, 357, 528, 336, 528, 305, 529, 3);
-        // bezierPaint(g2, 305, 529, 303, 525, 303, 522, 305, 520, 3);
-        // bezierPaint(g2, 305, 520, 296, 509, 297, 499, 303, 490, 3);
-        // bezierPaint(g2, 303, 490, 298, 482, 298, 477, 302, 462, 3);
-
-        // //white area
-        // g2.setColor(new Color(248,252,228));
-        // bezierPaint(g2, 239, 307, 265, 285, 286, 294, 303, 316, 3);
-        // bezierPaint(g2, 278, 356, 286, 355, 294, 356, 303, 359, 3);
-        // bezierPaint(g2, 303, 359, 307, 365, 308, 371, 305, 395, 3);
-        // bezierPaint(g2, 298, 446, 298, 448, 295, 450, 293, 455, 3);
-        // bezierPaint(g2, 233, 447, 218, 447, 205, 438, 194, 428, 2);
-
-        // bezierPaint(g2, 270,275, 268, 272, 267, 270, 265, 269, 1);
-
-        // //brown of boots
-        // g2.setColor(new Color(118,59,25));
-        // bezierPaint(g2,211, 484, 220, 494, 230, 503, 254, 505,3);
-        // bezierPaint(g2,275, 539, 252, 539, 232, 539, 222, 539,3);
-        // bezierPaint(g2,222, 539, 209, 529, 200, 509, 197, 498,3);
-
-        // bezierPaint(g2,337, 485, 327, 486,314,486, 304, 486,3);
-        // bezierPaint(g2,375, 513, 351, 520,324,515, 302,519,3);
-
-        // // color green
-        // buffer = floodFill(buffer, 325, 291, Color.white, new Color(139,197,91));
-        // buffer = floodFill(buffer, 320, 397, Color.white, new Color(139,197,91));
-        // buffer = floodFill(buffer, 344, 440, Color.white, new Color(139,197,91));
-        // buffer = floodFill(buffer, 295, 220, Color.white, new Color(139,197,91));
-        // buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
-       
-        // // color boots
-        // buffer = floodFill(buffer, 331, 478, Color.white, new Color(190,122,49));
-        // buffer = floodFill(buffer, 355, 492, Color.white, new Color(190,122,49));
-        // buffer = floodFill(buffer, 244, 525, Color.white, new Color(190,122,49));
-        // buffer = floodFill(buffer, 247, 491, Color.white, new Color(190,122,49));
-        
-        // buffer = floodFill(buffer, 242, 543, Color.white, new Color(224,191,119));
-        // buffer = floodFill(buffer, 346, 520, Color.white, new Color(224,191,119));
-        
-        // //color wavy
-        // buffer = floodFill(buffer, 237, 270, Color.white, new Color(179,67,64));
-        // buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
-        // buffer = floodFill(buffer, 260, 353, Color.white, new Color(179,67,64));
-        
-        // buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
-        
-        // //color similar to white?
-        // buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-        // buffer = floodFill(buffer, 302,448, Color.white, new Color(248,252,227));
-        // buffer = floodFill(buffer, 221, 449, Color.white, new Color(248,252,227));
-
-        // //color eyes
-        // buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-        // buffer = floodFill(buffer, 306, 248, Color.white, Color.black);
-
-        // //nose hole
-        // g2.setColor(Color.black);
-        // bezierPaint(g2,352, 255, 355, 257,358, 259, 360, 260,5);
-        // bezierPaint(g2,376, 249,374, 252,378, 255, 376,257,5);
-        // }
-        // // nose
         // bezierPaint(g2, 304,324,320,337,336,344,350,342,4);
         // bezierPaint(g2, 350,342,374,337,392,321,402,300,4);
         // bezierPaint(g2, 402, 300, 404, 285, 398, 260, 380, 241, 4);
@@ -484,7 +345,148 @@ public class Dino extends JPanel implements Runnable {
         // g2.setColor(Color.black);
         // bezierPaint(g2,352, 255, 355, 257,358, 259, 360, 260,5);
         // bezierPaint(g2,376, 249,374, 252,378, 255, 376,257,5);
-        g.drawImage(buffer, 0, 0, null);
+        // g.drawImage(buffer, 0, 0, null);
+        // _3
+        //white area
+        // g2.setColor(new Color(248,252,228));
+        // bezierPaint(g2, 278, 356, 290, 362, 290, 362, 301, 361, 2);
+        // bezierPaint(g2, 300, 361, 308, 376, 308, 409, 299, 423, 2);
+        // bezierPaint(g2, 295, 441, 294, 452, 294, 452, 296, 452, 2);
+        // bezierPaint(g2, 234, 456, 220, 456, 203, 446, 190, 430, 3);
+        // bezierPaint(g2, 265, 272, 267, 273, 268, 275, 269, 276, 2);
+
+        // bezierPaint(g2, 239, 312, 266, 288, 284, 292, 308, 318, 2);
+        // g2.setColor(Color.black);
+        // // nose
+        // bezierPaint(g2, 304,324,320,337,336,344,350,342,4);
+        // bezierPaint(g2, 350,342,374,337,392,321,402,300,4);
+        // bezierPaint(g2, 402, 300, 404, 285, 398, 260, 380, 241, 4);
+        // bezierPaint(g2, 380, 241, 372, 237, 336, 228, 306, 268, 4);
+        
+        // //eyes
+        // bezierPaint(g2, 323, 250, 318, 207, 303, 213, 292, 235, 3);
+        // bezierPaint(g2, 292, 235, 278, 207, 258, 224, 265, 269, 3);
+        // bezierPaint(g2, 292, 235, 286, 201, 259, 200, 250, 239, 3);
+        // bezierPaint(g2, 250, 239, 250, 258, 251, 268, 253, 276, 3);
+        // bezierPaint(g2, 319, 229, 314, 206, 298, 204, 289, 221, 3);
+
+        // g2.drawOval(279, 242, 16, 24);
+        // g2.drawOval(301, 239, 14, 22);
+
+        // //undereyes
+        // bezierPaint(g2, 303,269,291,279,279,280,270,275,3);
+
+        // //wavy
+        // bezierPaint(g2, 248,253,222,262,220,268,242,292,3);
+        // bezierPaint(g2, 242,292,211,318,210,320,248,339,3);
+        // bezierPaint(g2, 248,339,243,347,243,356,244,368,3);
+
+
+        // //mouth
+        // bezierPaint(g2, 309, 315,305,318,303,320,297,324,5);
+        // bezierPaint(g2, 350, 342,343,351,326,360,317,360,5);
+
+        // //cheek
+        // bezierPaint(g2, 253, 276, 224, 304, 235, 342, 275, 358, 3);
+        
+        // // //tail
+        // bezierPaint(g2, 221, 386, 211, 384, 201, 380, 197,379, 3);
+        // bezierPaint(g2, 197, 379, 177, 368, 167, 376, 173, 391, 3);
+        // bezierPaint(g2, 173, 391, 176, 414, 200, 450, 223, 468, 3);
+
+        // // //front leg
+        // bezierPaint(g2, 240, 450, 238, 459, 238, 459, 231, 467, 3);
+        // bezierPaint(g2, 297,454,294,469,287,479,267,486, 3);
+        // bezierPaint(g2, 229, 467,253, 484,237,475,266,487, 3);
+        // bezierPaint(g2, 263, 486, 272, 493,270,503,255,507, 3);
+        // bezierPaint(g2, 242, 511,277, 506,274,504,286,521, 3);
+        // bezierPaint(g2, 285,520,288,533,288,533, 276,548, 3);
+        // bezierPaint(g2, 276, 548, 276, 553,276,553,274,557, 3);
+        // bezierPaint(g2,272,558,219,556,219,556, 217,555,3);
+        // bezierPaint(g2,217, 555,201,530,201,530,195,503,3);
+        // bezierPaint(g2,194,505,195,498,195,498,200,496,3);
+        // bezierPaint(g2,203,495,203,487,210,482,215,482,3);
+        // bezierPaint(g2,217,483,219,470, 216,474,227, 467,3);
+
+        // //saddle
+        // bezierPaint(g2, 262,370,242,367,230,376,231,395, 2);
+        // bezierPaint(g2, 235,375,217,387,214,402,227,411, 3);
+        // // bezierPaint(g2, 262, 388, 249, 397, 232, 395, 235, 370, 3);
+
+        // // //front arm
+        // bezierPaint(g2, 275,360,240,381,242,379,232,395, 3);
+        // bezierPaint(g2, 234,391,227,403,229,419,239,429, 3);
+        // bezierPaint(g2, 240,430,269,459,269,459,290,433, 3);
+        // bezierPaint(g2, 286,386,268,403,268,403,286,416, 3);
+        // bezierPaint(g2, 287,414,303,430,303,439,287,438, 3);
+
+        // //front body
+        // bezierPaint(g2, 327, 360,339,415,334,453,292,473, 3);
+        // // bezierPaint(g2, 327, 436, 324, 447, 310, 461, 284, 470, 3);
+
+        // //back leg
+        // bezierPaint(g2, 334, 401, 350, 409, 352, 423, 342, 438, 3);
+        // bezierPaint(g2, 332, 426, 349, 444, 347, 463, 339, 475, 3);
+        // bezierPaint(g2, 338, 474, 323, 477, 291, 478, 294, 472, 3);
+        // bezierPaint(g2, 296, 475, 290, 478, 287, 489, 295, 496, 3);
+        // bezierPaint(g2, 296, 496, 286, 505, 289, 520, 299, 525, 3);
+        // bezierPaint(g2, 297, 527, 297, 532, 297, 532, 300, 536, 3);
+        // bezierPaint(g2, 302, 537, 315, 539, 352, 536, 369, 532, 3);
+        // bezierPaint(g2, 370, 532, 373, 521, 373, 521, 368, 516, 3);
+        // bezierPaint(g2, 371, 517, 382, 507, 383, 490, 374, 484, 3);
+        // bezierPaint(g2, 372, 483, 363, 474, 349, 474, 329, 495, 3);
+        // bezierPaint(g2, 340, 484, 342, 478, 342, 478, 336, 474, 3);
+
+        
+        // // //brown of boots
+        // g2.setColor(new Color(118,59,25));
+        // bezierPaint(g2,248, 510, 228, 498, 228, 498, 219, 484, 3);
+        // bezierPaint(g2,275, 545, 267, 548, 267, 548, 225, 544, 3);
+        // bezierPaint(g2,225, 545, 215, 533, 206, 510, 204, 498, 3);
+
+        // bezierPaint(g2,329, 494, 314, 498, 314, 498, 297, 497, 3);
+        // bezierPaint(g2,370, 517, 351, 523, 324, 526, 300, 525, 3);
+
+        // // color green
+        // buffer = floodFill(buffer, 300, 215, Color.white, new Color(139,197,91));
+        // buffer = floodFill(buffer, 336, 292, Color.white, new Color(139,197,91));
+        // buffer = floodFill(buffer, 264, 434, Color.white, new Color(139,197,91));
+        // buffer = floodFill(buffer, 330, 462, Color.white, new Color(139,197,91));
+        // buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
+        // buffer = floodFill(buffer, 340, 422, Color.white, new Color(139,197,91));
+
+        // // // color boots
+        // buffer = floodFill(buffer, 331, 480, Color.white, new Color(190,122,49));
+        // buffer = floodFill(buffer, 355, 492, Color.white, new Color(190,122,49));
+        // buffer = floodFill(buffer, 244, 525, Color.white, new Color(190,122,49));
+        // buffer = floodFill(buffer, 247, 491, Color.white, new Color(190,122,49));
+        
+        // buffer = floodFill(buffer, 242, 543, Color.white, new Color(224,191,119));
+        // buffer = floodFill(buffer, 346, 520, Color.white, new Color(224,191,119));
+        
+        // //color wavy
+        // buffer = floodFill(buffer, 237, 270, Color.white, new Color(179,67,64));
+        // buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
+        // buffer = floodFill(buffer, 260, 353, Color.white, new Color(179,67,64));
+        
+        // buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
+        
+        // //color similar to white?
+        // buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
+        // // buffer = floodFill(buffer, 302,448, Color.white, new Color(248,252,227));
+        // // plot(g2,225,460,5,5);
+        // buffer = floodFill(buffer, 225, 460, Color.white, new Color(248,252,227));
+
+        // //color eyes
+        // buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
+        // buffer = floodFill(buffer, 306, 248, Color.white, Color.black);
+
+        // //nose hole
+        // g2.setColor(Color.black);
+        // bezierPaint(g2,352, 255, 355, 257,358, 259, 360, 260,5);
+        // bezierPaint(g2,376, 249,374, 252,378, 255, 376,257,5);
+        // }
+        
         // // exportImage(buffer, "bunny.png");
     }
 
