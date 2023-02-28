@@ -1,16 +1,18 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class Dino extends JPanel implements Runnable {
     double px = 0;
     int x = 1;
-    int timepast = 0;
+    int timepast = 0, veloX = 110, veloY = 10;
+    double circleMoveX = 600, circleMoveY = 0;
+    int xr = 0, yr = 0, r = 1;
+
+    boolean drawCircle = true;
 
     public static void main(String[] args) {
         JFrame f = new JFrame();
@@ -30,13 +32,18 @@ public class Dino extends JPanel implements Runnable {
     public void run(){
         double lastTime = System.currentTimeMillis();
         double currentTime, elapsedTime, timechecks = 0;
-        double speedwalk = 0.05;
+        double speedwalk = 0.07;
 
         while(true){
             currentTime = System.currentTimeMillis();
             elapsedTime = currentTime - lastTime;
             lastTime = currentTime;
+
             timechecks += elapsedTime/1000;
+
+            circleMoveX -= veloX * elapsedTime/1000.0;
+            circleMoveY += veloY * elapsedTime/1000.0;
+
             if(timechecks >= 0 && timechecks < speedwalk){
                 timepast = 1;
                 
@@ -62,6 +69,10 @@ public class Dino extends JPanel implements Runnable {
                     
             }
             if(timechecks >= speedwalk*6) timechecks = 0;
+
+            if(circleMoveX <= -99){
+                drawCircle = false;
+            }
             repaint();
         }
     }
@@ -69,12 +80,44 @@ public class Dino extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         BufferedImage buffer = new BufferedImage(601, 601, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = buffer.createGraphics();
+        Graphics2D g4 = buffer.createGraphics();
+        Random rd = new Random();
 
-        g2.setColor(Color.white);
-        // g2.setColor(Color.pink);
+        g2.setColor(Color.gray);
         g2.fillRect(0, 0, 600, 600);
+        g2.setColor(Color.white);
+
+        for(int i = 0; i < 50; i++){
+            xr = rd.nextInt(600);
+            yr = rd.nextInt(600);
+            r = rd.nextInt(4);
+            plot(g2,xr,yr,r,r);
+        }
         g2.setColor(Color.black);
-        
+
+        if(drawCircle){
+            g4.setColor(new Color(80, 89, 124));
+            g4.translate(circleMoveX, -circleMoveY);
+            midpointCircle(g4, 50, 100,50);
+            
+            try{
+                if(circleMoveX < 600 && circleMoveX > 90){
+                    buffer = floodFill(buffer, 10+(int)circleMoveX, 100+(int)(-circleMoveY), Color.gray, new Color(80, 89, 124));
+                }
+                else{
+                    buffer = floodFill(buffer, 90+(int)circleMoveX, 100+(int)(-circleMoveY), Color.gray, new Color(80, 89, 124));
+                }
+            }
+            catch(Exception e){
+            }
+            g4.setColor(Color.black);
+            bezierPaint(g4, 30, 85, 33, 105, 38, 105, 40, 85, 2);
+            bezierPaint(g4, 60, 85, 63, 105, 68, 105, 70, 85, 2);
+        }
+        if(!drawCircle){
+
+        }
+
         if (timepast == 1){
             // _1
             // nose
@@ -164,7 +207,7 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2, 305, 510, 296, 499, 297, 489, 303, 480, 3);
             bezierPaint(g2, 303, 480, 298, 472, 298, 467, 305, 455, 3);
 
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 239, 302, 265, 280, 286, 289, 303, 311, 3);
             bezierPaint(g2, 278, 351, 286, 350, 294, 351, 303, 354, 3);
@@ -184,35 +227,40 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2,375, 508, 351, 520,324,510, 304,508,3);
 
             // color green
-            buffer = floodFill(buffer, 325, 291, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 320, 397, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 344, 440, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 295, 216, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer, 325, 291, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 320, 397, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 344, 440, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 295, 216, Color.gray, new Color(139,197,91));
         
             // color boots
-            buffer = floodFill(buffer, 331, 468, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 355, 492, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 244, 525, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 247, 491, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 331, 468, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 355, 492, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 244, 525, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 247, 491, Color.gray, new Color(190,122,49));
             
-            buffer = floodFill(buffer, 242, 543, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 346, 520, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 242, 543, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 346, 520, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 237, 270, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 260, 351, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 237, 270, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 260, 351, Color.gray, new Color(179,67,64));
             
-            buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
+            buffer = floodFill(buffer, 240, 379, Color.gray, new Color(142,31,63));
             
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 302,443, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 221, 444, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 302,443, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 221, 444, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 306, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 306, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);
+            g2.setColor(Color.white);
+            // plot(g2, 229,382,5,5);
+            buffer = floodFill(buffer, 229, 382, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
@@ -306,7 +354,7 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2, 305, 520, 296, 509, 297, 499, 303, 490, 3);
             bezierPaint(g2, 303, 490, 298, 482, 298, 477, 302, 462, 3);
 
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 239, 307, 265, 285, 286, 294, 303, 316, 3);
             bezierPaint(g2, 278, 356, 286, 355, 294, 356, 303, 359, 3);
@@ -326,36 +374,41 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2,375, 513, 351, 520,324,515, 302,519,3);
 
             // color green
-            buffer = floodFill(buffer, 325, 291, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 320, 397, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 344, 440, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 295, 220, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer, 325, 291, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 320, 397, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 344, 440, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 295, 220, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 220, 420, Color.gray, new Color(139,197,91));
         
             // color boots
-            buffer = floodFill(buffer, 331, 478, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 355, 492, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 244, 525, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 247, 491, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 331, 478, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 355, 492, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 244, 525, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 247, 491, Color.gray, new Color(190,122,49));
             
-            buffer = floodFill(buffer, 242, 543, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 346, 520, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 242, 543, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 346, 520, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 237, 270, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 260, 353, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 237, 270, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 260, 353, Color.gray, new Color(179,67,64));
             
-            buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
+            buffer = floodFill(buffer, 240, 379, Color.gray, new Color(142,31,63));
             
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 302,448, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 221, 449, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 302,448, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 221, 449, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 306, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 306, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);
+            
+            // plot(g2, 229,382,5,5);
+            buffer = floodFill(buffer, 229, 382, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
@@ -365,7 +418,7 @@ public class Dino extends JPanel implements Runnable {
         }
         else if (timepast == 3){
             // _4
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 278, 356, 290, 362, 290, 362, 301, 361, 2);
             bezierPaint(g2, 300, 361, 308, 376, 308, 409, 299, 423, 2);
@@ -466,38 +519,43 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2,370, 517, 351, 523, 324, 526, 300, 525, 3);
 
             // color green
-            buffer = floodFill(buffer, 300, 215, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 336, 292, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 264, 434, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 330, 462, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 340, 422, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer, 300, 215, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 336, 292, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 264, 434, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 330, 462, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 220, 420, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 340, 422, Color.gray, new Color(139,197,91));
 
             // // color boots
-            buffer = floodFill(buffer, 331, 480, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 355, 492, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 244, 525, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 247, 491, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 331, 480, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 355, 492, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 244, 525, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 247, 491, Color.gray, new Color(190,122,49));
             
-            buffer = floodFill(buffer, 235,551, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 336,530, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 235,551, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 336,530, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 237, 270, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 260, 353, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 237, 270, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 260, 353, Color.gray, new Color(179,67,64));
             
-            buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
+            buffer = floodFill(buffer, 240, 379, Color.gray, new Color(142,31,63));
             
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-            // buffer = floodFill(buffer, 302,448, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
+            // buffer = floodFill(buffer, 302,448, Color.gray, new Color(248,252,227));
             // plot(g2,225,460,5,5);
-            buffer = floodFill(buffer, 225, 460, Color.white, new Color(248,252,227));
+            buffer = floodFill(buffer, 225, 460, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 306, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 306, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);
+            
+            // plot(g2, 226,388,5,5);
+            buffer = floodFill(buffer, 226, 389, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
@@ -506,7 +564,7 @@ public class Dino extends JPanel implements Runnable {
         }
         else if (timepast == 4){
             // _5
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 278, 356, 290, 362, 290, 362, 301, 361, 2);
             bezierPaint(g2, 300, 361, 308, 376, 308, 409, 302, 420, 2);
@@ -587,32 +645,36 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2,275, 547, 234,523,234,523,218,481, 3);
 
             // color green
-            buffer = floodFill(buffer, 302,483, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 336, 292, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 343,389, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 389,367, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 303,219, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer, 302,483, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 336, 292, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 343,389, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 389,367, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 220, 420, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 303,219, Color.gray, new Color(139,197,91));
 
             // color boots
-            buffer = floodFill(buffer, 244, 520, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 247, 474, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 244, 520, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 247, 474, Color.gray, new Color(190,122,49));
             
-            buffer = floodFill(buffer, 231, 524, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 296,548, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 231, 524, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 296,548, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 246, 266, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 246, 266, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
             
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 302,448, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 225, 455, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 302,448, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 225, 455, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 312, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 312, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);
+            // plot(g2, 249,392,5,5);
+            buffer = floodFill(buffer, 249, 392, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
@@ -621,7 +683,7 @@ public class Dino extends JPanel implements Runnable {
         }
         else if (timepast == 5){
             // _6
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 278, 356, 290, 362, 290, 362, 301, 361, 2);
             bezierPaint(g2, 300, 361, 308, 376, 308, 409, 302, 410, 2);
@@ -713,34 +775,37 @@ public class Dino extends JPanel implements Runnable {
 
 
             // color green
-            buffer = floodFill(buffer, 302,483, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 336, 292, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 343,389, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 389,367, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 303,219, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 261,474, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer, 302,483, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 336, 292, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 343,389, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 389,367, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 220, 420, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 303,219, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 261,474, Color.gray, new Color(139,197,91));
 
             // color boots
-            buffer = floodFill(buffer, 251, 527, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 252,487, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 293,472, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 328,482, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 251, 527, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 252,487, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 293,472, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 328,482, Color.gray, new Color(190,122,49));
 
-            buffer = floodFill(buffer, 336,511, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 254,548, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 336,511, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 254,548, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 246, 266, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 246, 266, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
             
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
-            buffer = floodFill(buffer, 232,458, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
+            buffer = floodFill(buffer, 232,458, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 312, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 312, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);            
+            buffer = floodFill(buffer, 249, 392, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
@@ -749,7 +814,7 @@ public class Dino extends JPanel implements Runnable {
         }
         else if(timepast == 6){
             // _8
-            //white area
+            //gray area
             g2.setColor(new Color(248,252,228));
             bezierPaint(g2, 278, 356, 290, 362, 290, 362, 301, 361, 2);
             bezierPaint(g2, 300, 361, 308, 376, 308, 409, 302, 410, 2);
@@ -840,41 +905,77 @@ public class Dino extends JPanel implements Runnable {
             bezierPaint(g2,357,506,324,519,324,519,285,537, 3);
 
             // color green
-            buffer = floodFill(buffer,241,427, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 336, 292, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 338,438, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 293,452, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 220, 420, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 303,219, Color.white, new Color(139,197,91));
-            buffer = floodFill(buffer, 261,474, Color.white, new Color(139,197,91));
+            buffer = floodFill(buffer,241,427, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 336, 292, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 338,438, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 293,452, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 220, 420, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 303,219, Color.gray, new Color(139,197,91));
+            buffer = floodFill(buffer, 261,474, Color.gray, new Color(139,197,91));
 
             // color boots
-            buffer = floodFill(buffer, 287,486, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 253,530, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 251,488, Color.white, new Color(190,122,49));
-            buffer = floodFill(buffer, 328,482, Color.white, new Color(190,122,49));
+            buffer = floodFill(buffer, 287,486, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 253,530, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 251,488, Color.gray, new Color(190,122,49));
+            buffer = floodFill(buffer, 328,482, Color.gray, new Color(190,122,49));
 
-            buffer = floodFill(buffer, 335,522, Color.white, new Color(224,191,119));
-            buffer = floodFill(buffer, 254,548, Color.white, new Color(224,191,119));
+            buffer = floodFill(buffer, 335,522, Color.gray, new Color(224,191,119));
+            buffer = floodFill(buffer, 254,548, Color.gray, new Color(224,191,119));
             
             //color wavy
-            buffer = floodFill(buffer, 246, 266, Color.white, new Color(179,67,64));
-            buffer = floodFill(buffer, 231, 319, Color.white, new Color(179,67,64));
+            buffer = floodFill(buffer, 246, 266, Color.gray, new Color(179,67,64));
+            buffer = floodFill(buffer, 231, 319, Color.gray, new Color(179,67,64));
             
-            buffer = floodFill(buffer, 240, 379, Color.white, new Color(142,31,63));
+            buffer = floodFill(buffer, 240, 379, Color.gray, new Color(142,31,63));
 
-            //color similar to white?
-            buffer = floodFill(buffer, 280, 323, Color.white, new Color(248,252,227));
+            //color similar to gray?
+            buffer = floodFill(buffer, 280, 323, Color.gray, new Color(248,252,227));
 
             //color eyes
-            buffer = floodFill(buffer, 288, 254, Color.white, Color.black);
-            buffer = floodFill(buffer, 312, 248, Color.white, Color.black);
+            buffer = floodFill(buffer, 288, 254, Color.gray, Color.black);
+            buffer = floodFill(buffer, 312, 248, Color.gray, Color.black);
+
+            buffer = floodFill(buffer, 282, 235, Color.gray, Color.white);
+            // plot(g2, 274,362,5,5);
+            buffer = floodFill(buffer, 229, 382, Color.gray, Color.white);
+            buffer = floodFill(buffer, 275, 362, Color.gray, Color.white);
 
             //nose hole
             g2.setColor(Color.black);
             bezierPaint(g2,352, 260, 355, 262,358, 264, 360, 265,5);
             bezierPaint(g2,376, 254, 374, 257,378, 260, 376,262,5);
         }
+        
+        midpointCircle(g2, 400, 200, 10);
+        buffer = floodFill(buffer, 400, 200, Color.gray, Color.yellow);
+        midpointCircle(g2, 207, 228, 10);
+        buffer = floodFill(buffer, 207, 228, Color.gray, Color.yellow);
+        midpointCircle(g2, 161, 357, 10);
+        buffer = floodFill(buffer, 161, 357, Color.gray, Color.yellow);
+        midpointCircle(g2, 432, 405, 10);
+        buffer = floodFill(buffer, 432, 405, Color.gray, Color.yellow);
+
+        g2.setColor(Color.pink);
+        midpointEllipse(g2, 398, 178, 2, 7);
+        midpointEllipse(g2, 206, 205, 2, 7);
+        midpointEllipse(g2, 160, 335, 2, 7);
+        midpointEllipse(g2, 431, 384, 2, 7);
+
+        midpointEllipse(g2, 398, 218, 2, 7);
+        midpointEllipse(g2, 206, 245, 2, 7);
+        midpointEllipse(g2, 160, 375, 2, 7);
+        midpointEllipse(g2, 431, 424, 2, 7);
+
+        midpointEllipse(g2, 378, 198, 7, 2);
+        midpointEllipse(g2, 186, 225, 7, 2);
+        midpointEllipse(g2, 140, 355, 7, 2);
+        midpointEllipse(g2, 411, 404, 7, 2);
+
+        midpointEllipse(g2, 418, 198, 7, 2);
+        midpointEllipse(g2, 226, 225, 7, 2);
+        midpointEllipse(g2, 180, 355, 7, 2);
+        midpointEllipse(g2, 451, 404, 7, 2);
+
         g.drawImage(buffer, 0, 0, null);
     }
     public BufferedImage floodFill(BufferedImage bf, int x, int y, Color target_colour, Color replacement_colour) {
@@ -923,7 +1024,82 @@ public class Dino extends JPanel implements Runnable {
             plot(g, (int) Math.round(xt), (int) Math.round(yt), wid, wid);
         }
     }
+    private void midpointEllipse(Graphics g, int xc, int yc, int a, int b) {
+        int a2 = a * a;
+        int b2 = b * b;
+        int twoA2 = 2 * a2;
+        int twoB2 = 2 * b2;
+        // REGION 1
+        int x = 0;
+        int y = b;
+        int D = (int) (b2 - a2 * b + a2 / 4);
+        int Dx = 0;
+        int Dy = twoA2 * y;
+        while (Dx <= Dy) {
+            plot(g, xc + x, yc + y, 5, 5);
+            plot(g, xc - x, yc + y, 5, 5);
+            plot(g, xc - x, yc - y, 5, 5);
+            plot(g, xc + x, yc - y, 5, 5);
 
+            x = x + 1;
+            Dx = Dx + twoB2;
+            D = D + Dx + b2;
+            if (D >= 0) {
+                y = y - 1;
+                Dy = Dy - twoA2;
+                D = D - Dy;
+            }
+        }
+        //REGION 2
+        x = a;
+        y = 0;
+        D = (int) (a2 - b2 * a + b2 / 4);
+        Dx = twoB2 * x;
+        Dy = 0;
+        while (Dx >= Dy) {
+            plot(g, xc + x, yc + y, 5, 5);
+            plot(g, xc - x, yc + y, 5, 5);
+            plot(g, xc - x, yc - y, 5, 5);
+            plot(g, xc + x, yc - y, 5, 5);
+            y = y + 1;
+            Dy = Dy + twoA2;
+            D = D + Dy + a2;
+            if (D >= 0) {
+                x = x - 1;
+                Dx = Dx - twoB2;
+                D = D - Dx;
+            }
+        }
+    }
+    public void midpointCircle(Graphics g, int xc, int yc, int r) {
+        int x = 0;
+        int y = r;
+        int Dx = 2 * x;
+        int Dy = 2 * y;
+        int D = 1 - r;
+
+        while (x <= y) {
+            plot(g, xc + x, yc + y, 2, 2);
+            plot(g, xc + x, yc - y, 2, 2);
+            plot(g, xc - x, yc + y, 2, 2);
+            plot(g, xc - x, yc - y, 2, 2);
+            plot(g, xc + y, yc + x, 2, 2);
+            plot(g, xc + y, yc - x, 2, 2);
+            plot(g, xc - y, yc + x, 2, 2);
+            plot(g, xc - y, yc - x, 2, 2);
+
+            x = x + 1;
+            Dx = Dx + 2;
+            D = D + Dx + 1;
+
+            if (D >= 0) {
+                y = y - 1;
+                Dy = Dy - 2;
+                D = D - Dy;
+            }
+        }
+        // animateFloodFill(buffer, Dx, Dy, target_colour, replacement_colour);
+    }
     public void plotPoint(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
         g.setColor(Color.red);
         plot(g, x1, y1, 4, 4);
@@ -932,7 +1108,6 @@ public class Dino extends JPanel implements Runnable {
         plot(g, x4, y4, 4, 4);
         g.setColor(Color.BLACK);
     }
-
     private void plot(Graphics g, int x, int y, int width, int height) {
         g.fillRect(x, y, width, height);
     }
