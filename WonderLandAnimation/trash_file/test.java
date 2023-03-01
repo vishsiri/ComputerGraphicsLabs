@@ -1,3 +1,4 @@
+package trash_file;
 import java.awt.*;
 import javax.swing.*;
 

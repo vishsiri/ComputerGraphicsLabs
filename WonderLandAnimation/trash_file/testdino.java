@@ -1,3 +1,4 @@
+package trash_file;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

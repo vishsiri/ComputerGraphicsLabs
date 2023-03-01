@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-public class Dino extends JPanel implements Runnable {
+public class Assignment2_64050060_64050229 extends JPanel implements Runnable {
     double px = 0;
     int x = 1;
     int timepast = 0, veloX = 110, veloY = 10;
@@ -16,7 +16,7 @@ public class Dino extends JPanel implements Runnable {
 
     public static void main(String[] args) {
         JFrame f = new JFrame();
-        Dino m = new Dino();
+        Assignment2_64050060_64050229 m = new Assignment2_64050060_64050229();
 
         f.add(m);
         f.setTitle("Wonderland 64050060 & 64050229");
